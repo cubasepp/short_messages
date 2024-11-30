@@ -1,6 +1,11 @@
 class ShortMessagesController < ApplicationController
   def create
-    head(:ok)
+    @short_message = ShortMessage.new(short_message_params)
+    if @short_message.save
+      head(:created)
+    else
+      head(:unprocessable_entity)
+    end
   end
 
 
