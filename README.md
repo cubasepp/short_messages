@@ -20,16 +20,16 @@ Run test:
 
 ```
 bundle exec rspec spec
-
 ```
 
 ## Endpoint
 
-It exists just one endpoint:
+Short Messages Endpoint:
 
 ```
-/short_messages
-
-Body: { short_message: { message: "Test" } }
+curl --request POST \
+  --url http://localhost:3000/short_messages \
+  --header 'Content-Type: application/json' \
+  --data '{ "short_message": { "message": "Hallo World" } }'
 
 ```
