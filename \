@@ -1,0 +1,29 @@
+require 'rails_helper'
+
+RSpec.describe ShortMessage, type: :model do
+  subject { described_class.new }
+
+  describe "validations" do
+    it { should validate_presence_of(:message) }
+  end
+
+
+  describe "#message" do
+    before do
+      ShortMessage.max_chunk_length = 20
+    end
+
+    context "split chunks" do
+      let(:message) { Faker::Lorem.sentence }
+
+      it "splits 4 Words into 3 chunks" do
+        subject.message = message
+        debugger
+        expect(subject.message_chunks).to(match_array([ "Voluptas- part 1", "placeat ea- part 2", "est.- part 3" ]))
+        expect(subject.valid?).to(be(truthy))
+      end
+
+      # it "splits "
+    end
+  end
+end

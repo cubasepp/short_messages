@@ -29,14 +29,15 @@ class ShortMessage < ApplicationRecord
   end
 
   def to_message_chunks(value)
+    debugger
     result, message, part = value&.split&.reduce([ [], "", 1 ]) do |(result, message, part), chunk|
       chunk_to_append = " #{chunk}"
       current_suffix = (self.class.chunk_suffix % part)
 
       if (message + chunk_to_append + current_suffix).length > self.class.max_chunk_length
         result << (message.presence || chunk).strip + current_suffix
-        part += 1
-        [ result, message.present? ? chunk_to_append.strip : "", part ]
+        part +=1
+        [ result, chunk, part ]
       else
         [ result, (message + chunk_to_append).strip, part ]
       end
