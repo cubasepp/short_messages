@@ -13,6 +13,10 @@ RSpec.describe ShortMessage, type: :model do
       ShortMessage.max_chunk_length = 20
     end
 
+    after do
+      ShortMessage.max_chunk_length = 160
+    end
+
     context "split chunks" do
       let(:message) {  }
 

@@ -7,6 +7,10 @@ class ShortMessage < ApplicationRecord
   class_attribute :max_chunk_length, default: 160
   class_attribute :chunk_suffix, default: "- part %s"
 
+  after_create do
+    ShortMessageJob.perform_later(id: id)
+  end
+
   def message=(value)
     super.tap do |value|
       self.message_chunks = to_message_chunks(value)
